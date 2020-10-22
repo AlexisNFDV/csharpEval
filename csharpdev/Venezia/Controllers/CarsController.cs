@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Venezia.Models;
 
 namespace Venezia.Controllers
 {
+    [Authorize]
     public class CarsController : Controller
     {
         private readonly VeneziaContext _context;
@@ -24,6 +26,7 @@ namespace Venezia.Controllers
             ViewBag.Fuels = new SelectList(await _context.Fuel.ToListAsync(), "ID", "Label");
         }
 
+        [AllowAnonymous]
         // GET: Cars
         public async Task<IActionResult> Index()
         {
@@ -31,6 +34,7 @@ namespace Venezia.Controllers
             return View(cars);
         }
 
+        [AllowAnonymous]
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
